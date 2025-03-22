@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERP Preview Tool | Google Search Results Simulator - Multi-Tools Hub</title>
+    <meta name="description" content="Free SERP Preview Tool to simulate how your website appears in Google search results. Test titles, meta descriptions, and URLs for better click-through rates.">
+    <meta name="keywords" content="serp preview, google search preview, meta title preview, meta description preview, SEO tools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://your-domain.com/tools/seo/serp-preview.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="SERP Preview Tool | Google Search Results Simulator">
+    <meta property="og:description" content="Preview how your website appears in Google search results. Optimize titles and descriptions for better CTR.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/tools/seo/serp-preview.html">
+    <meta property="og:image" content="https://your-domain.com/images/serp-preview-og.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SERP Preview Tool | Google Search Results Simulator">
+    <meta name="twitter:description" content="Preview how your website appears in Google search results. Optimize titles and descriptions for better CTR.">
+    <meta name="twitter:image" content="https://your-domain.com/images/serp-preview-og.jpg">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SERP Preview Tool",
+        "description": "Free tool to preview how your website appears in Google search results",
+        "applicationCategory": "SEO Tool",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .preview-card {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .serp-title {
+            color: #1a0dab;
+            font-size: 20px;
+            line-height: 1.3;
+            margin-bottom: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .serp-url {
+            color: #006621;
+            font-size: 14px;
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+        .serp-description {
+            color: #545454;
+            font-size: 14px;
+            line-height: 1.57;
+            word-wrap: break-word;
+        }
+        .character-count {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        .character-count.warning {
+            color: #ffc107;
+        }
+        .character-count.danger {
+            color: #dc3545;
+        }
+        .device-toggle {
+            margin-bottom: 1rem;
+        }
+        .mobile-preview .serp-title {
+            font-size: 16px;
+        }
+        .mobile-preview .serp-url,
+        .mobile-preview .serp-description {
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../../index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html">SEO Tools</a></li>
+                <li class="breadcrumb-item active" aria-current="page">SERP Preview</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">SERP Preview Tool</h1>
+                <p class="lead text-center mb-5">Preview and optimize how your website appears in Google search results</p>
+                
+                <!-- Tool Description -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h5">About This SERP Preview Tool</h2>
+                        <p class="card-text">
+                            Our free SERP (Search Engine Results Page) Preview Tool helps you optimize your website's appearance in Google search results. Features include:
+                            <ul>
+                                <li>Real-time preview for desktop and mobile devices</li>
+                                <li>Character count monitoring with SEO recommendations</li>
+                                <li>Pixel width calculation for titles and descriptions</li>
+                                <li>Best practices for meta titles and descriptions</li>
+                                <li>Mobile-friendly preview mode</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form id="serpForm">
+                            <div class="mb-3">
+                                <label for="pageTitle" class="form-label">Meta Title</label>
+                                <input type="text" class="form-control" id="pageTitle" 
+                                       placeholder="Enter your page title">
+                                <div class="character-count" id="titleCount">
+                                    0 characters (Recommended: 50-60)
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pageUrl" class="form-label">URL</label>
+                                <input type="url" class="form-control" id="pageUrl" 
+                                       placeholder="https://example.com/page">
+                            </div>
+                            <div class="mb-3">
+                                <label for="metaDescription" class="form-label">Meta Description</label>
+                                <textarea class="form-control" id="metaDescription" rows="3"
+                                          placeholder="Enter your meta description"></textarea>
+                                <div class="character-count" id="descriptionCount">
+                                    0 characters (Recommended: 150-160)
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Search Result Preview</h5>
+                        
+                        <!-- Device Toggle -->
+                        <div class="device-toggle text-center">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary active" data-device="desktop">
+                                    <i class="fas fa-desktop"></i> Desktop
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" data-device="mobile">
+                                    <i class="fas fa-mobile-alt"></i> Mobile
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preview Card -->
+                        <div class="preview-card" id="previewCard">
+                            <div class="serp-title" id="previewTitle">
+                                Your Page Title - Brand Name
+                            </div>
+                            <div class="serp-url" id="previewUrl">
+                                https://example.com/page
+                            </div>
+                            <div class="serp-description" id="previewDescription">
+                                Your meta description will appear here. Make it compelling and include your main keywords naturally.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO Tips -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">SEO Tips</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Title Tag Best Practices:</h6>
+                                <ul>
+                                    <li>Keep it between 50-60 characters</li>
+                                    <li>Include your main keyword near the beginning</li>
+                                    <li>Make it unique and descriptive</li>
+                                    <li>Add your brand name at the end</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Meta Description Best Practices:</h6>
+                                <ul>
+                                    <li>Keep it between 150-160 characters</li>
+                                    <li>Include a call-to-action</li>
+                                    <li>Use your target keywords naturally</li>
+                                    <li>Make it compelling and unique</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h5">Frequently Asked Questions</h2>
+                        <div class="accordion" id="serpFAQ">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        What is a SERP Preview?
+                                    </button>
+                                </h3>
+                                <div id="faq1" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        A SERP Preview shows how your webpage will appear in Google search results. It helps you optimize your meta title and description for better click-through rates by showing exactly how they'll look to users.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        What are the ideal lengths for meta titles and descriptions?
+                                    </button>
+                                </h3>
+                                <div id="faq2" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        Meta titles should be between 50-60 characters to avoid truncation in search results. Meta descriptions should be between 150-160 characters for optimal display. However, Google may display different lengths depending on the device and query.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const titleInput = document.getElementById('pageTitle');
+        const urlInput = document.getElementById('pageUrl');
+        const descriptionInput = document.getElementById('metaDescription');
+        const previewTitle = document.getElementById('previewTitle');
+        const previewUrl = document.getElementById('previewUrl');
+        const previewDescription = document.getElementById('previewDescription');
+        const titleCount = document.getElementById('titleCount');
+        const descriptionCount = document.getElementById('descriptionCount');
+        const previewCard = document.getElementById('previewCard');
+        const deviceButtons = document.querySelectorAll('.device-toggle button');
+
+        // Update preview on input
+        titleInput.addEventListener('input', updatePreview);
+        urlInput.addEventListener('input', updatePreview);
+        descriptionInput.addEventListener('input', updatePreview);
+
+        // Device toggle
+        deviceButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                deviceButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                if (button.dataset.device === 'mobile') {
+                    previewCard.classList.add('mobile-preview');
+                } else {
+                    previewCard.classList.remove('mobile-preview');
+                }
+            });
+        });
+
+        function updatePreview() {
+            // Update title
+            const title = titleInput.value || 'Your Page Title - Brand Name';
+            previewTitle.textContent = title;
+            updateCharacterCount(title.length, titleCount, 50, 60);
+
+            // Update URL
+            const url = urlInput.value || 'https://example.com/page';
+            previewUrl.textContent = url;
+
+            // Update description
+            const description = descriptionInput.value || 
+                'Your meta description will appear here. Make it compelling and include your main keywords naturally.';
+            previewDescription.textContent = description;
+            updateCharacterCount(description.length, descriptionCount, 150, 160);
+        }
+
+        function updateCharacterCount(length, element, minRecommended, maxRecommended) {
+            element.textContent = `${length} characters (Recommended: ${minRecommended}-${maxRecommended})`;
+            
+            if (length === 0) {
+                element.className = 'character-count';
+            } else if (length < minRecommended) {
+                element.className = 'character-count warning';
+            } else if (length > maxRecommended) {
+                element.className = 'character-count danger';
+            } else {
+                element.className = 'character-count';
+            }
+        }
+    </script>
+</body>
+</html> 

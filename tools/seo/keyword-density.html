@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Density Checker | Content Analysis Tool - Multi-Tools Hub</title>
+    <meta name="description" content="Free Keyword Density Checker tool. Analyze keyword usage, frequency, and distribution in your content. Optimize your content for better SEO.">
+    <meta name="keywords" content="keyword density checker, content analysis tool, SEO keyword analysis, keyword frequency, content optimization">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://your-domain.com/tools/seo/keyword-density.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Keyword Density Checker | Content Analysis Tool">
+    <meta property="og:description" content="Analyze keyword density and optimize your content for better SEO. Free tool for content analysis and keyword optimization.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/tools/seo/keyword-density.html">
+    <meta property="og:image" content="https://your-domain.com/images/keyword-density-og.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Keyword Density Checker | Content Analysis Tool">
+    <meta name="twitter:description" content="Analyze keyword density and optimize your content for better SEO. Free tool for content analysis and keyword optimization.">
+    <meta name="twitter:image" content="https://your-domain.com/images/keyword-density-og.jpg">
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Keyword Density Checker",
+        "description": "Free tool to analyze keyword density and optimize content for SEO",
+        "applicationCategory": "SEO Tool",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .keyword-table {
+            font-size: 0.9rem;
+        }
+        .progress {
+            height: 0.5rem;
+        }
+        .density-badge {
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../../index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html">SEO Tools</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Keyword Density Checker</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Keyword Density Checker</h1>
+                <p class="lead text-center mb-5">Analyze and optimize keyword usage in your content</p>
+                
+                <!-- Tool Description -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h5">About This Keyword Density Checker</h2>
+                        <p class="card-text">
+                            Our free Keyword Density Checker helps you optimize your content for better SEO. Features include:
+                            <ul>
+                                <li>Real-time keyword density analysis</li>
+                                <li>Single word and phrase analysis</li>
+                                <li>Visual keyword distribution</li>
+                                <li>SEO recommendations</li>
+                                <li>Content statistics and metrics</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form id="densityForm">
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Content to Analyze</label>
+                                <textarea class="form-control" id="content" rows="8" placeholder="Paste your content here..."></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="specificKeywords" class="form-label">Specific Keywords to Track (Optional)</label>
+                                    <input type="text" class="form-control" id="specificKeywords" placeholder="Enter keywords separated by commas">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phraseLength" class="form-label">Analyze Phrases Up To</label>
+                                    <select class="form-control" id="phraseLength">
+                                        <option value="1">Single Words</option>
+                                        <option value="2">Two-Word Phrases</option>
+                                        <option value="3">Three-Word Phrases</option>
+                                        <option value="4">Four-Word Phrases</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Analyze Content</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultsSection" class="d-none">
+                    <!-- Content Stats -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Content Statistics</h5>
+                            <div class="row text-center">
+                                <div class="col-md-3 mb-3">
+                                    <div class="border rounded p-3">
+                                        <h6>Total Words</h6>
+                                        <span id="totalWords" class="h4">0</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="border rounded p-3">
+                                        <h6>Unique Words</h6>
+                                        <span id="uniqueWords" class="h4">0</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="border rounded p-3">
+                                        <h6>Characters</h6>
+                                        <span id="totalChars" class="h4">0</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="border rounded p-3">
+                                        <h6>Readability</h6>
+                                        <span id="readability" class="h4">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keyword Analysis -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Keyword Analysis</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped keyword-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Keyword/Phrase</th>
+                                            <th>Count</th>
+                                            <th>Density</th>
+                                            <th>Distribution</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="keywordResults">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">How to Use</h5>
+                        <ol class="mb-0">
+                            <li>Paste your content into the text area</li>
+                            <li>Optionally enter specific keywords you want to track</li>
+                            <li>Select the maximum phrase length to analyze</li>
+                            <li>Click "Analyze Content" to see the results</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h5">Frequently Asked Questions</h2>
+                        <div class="accordion" id="keywordFAQ">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        What is keyword density?
+                                    </button>
+                                </h3>
+                                <div id="faq1" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        Keyword density is the percentage of times a keyword appears in your content compared to the total number of words. It's an important SEO metric that helps ensure your content is properly optimized for search engines.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        What is the ideal keyword density?
+                                    </button>
+                                </h3>
+                                <div id="faq2" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        While there's no perfect keyword density, most SEO experts recommend keeping it between 1-3% for main keywords. However, focus on natural usage and readability rather than hitting specific percentages.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Container -->
+    <div id="ad-container" class="text-center py-3">
+        <!-- AdSense code will go here -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const densityForm = document.getElementById('densityForm');
+        const resultsSection = document.getElementById('resultsSection');
+
+        densityForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            analyzeContent();
+        });
+
+        function analyzeContent() {
+            const content = document.getElementById('content').value;
+            const specificKeywords = document.getElementById('specificKeywords').value;
+            const phraseLength = parseInt(document.getElementById('phraseLength').value);
+
+            if (!content.trim()) {
+                alert('Please enter some content to analyze');
+                return;
+            }
+
+            // Calculate basic statistics
+            const words = content.toLowerCase().match(/\b\w+\b/g) || [];
+            const uniqueWordsSet = new Set(words);
+            
+            document.getElementById('totalWords').textContent = words.length;
+            document.getElementById('uniqueWords').textContent = uniqueWordsSet.size;
+            document.getElementById('totalChars').textContent = content.length;
+            
+            // Calculate readability (Flesch-Kincaid Grade Level - simplified)
+            const sentences = content.split(/[.!?]+/).length;
+            const syllables = countSyllables(content);
+            const readabilityScore = Math.round(206.835 - 1.015 * (words.length / sentences) - 84.6 * (syllables / words.length));
+            document.getElementById('readability').textContent = readabilityScore + '%';
+
+            // Analyze keywords
+            const keywordResults = document.getElementById('keywordResults');
+            keywordResults.innerHTML = '';
+
+            // Get phrases up to the selected length
+            const phrases = getAllPhrases(words, phraseLength);
+            const keywordStats = calculateKeywordStats(phrases, words.length);
+
+            // Add specific keywords if provided
+            const specificKeywordsList = specificKeywords.split(',')
+                .map(k => k.trim().toLowerCase())
+                .filter(k => k);
+
+            // Combine and sort results
+            const combinedResults = [...keywordStats]
+                .filter(([phrase, stats]) => 
+                    stats.count > 1 || specificKeywordsList.includes(phrase))
+                .sort((a, b) => b[1].count - a[1].count)
+                .slice(0, 20);
+
+            // Display results
+            combinedResults.forEach(([phrase, stats]) => {
+                const row = document.createElement('tr');
+                const density = (stats.count / words.length * 100).toFixed(2);
+                const isOptimal = density >= 0.5 && density <= 2.5;
+                
+                row.innerHTML = `
+                    <td>${phrase}</td>
+                    <td>${stats.count}</td>
+                    <td>${density}%</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar ${isOptimal ? 'bg-success' : 'bg-warning'}" 
+                                 role="progressbar" 
+                                 style="width: ${Math.min(density * 20, 100)}%">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge ${isOptimal ? 'bg-success' : 'bg-warning'} density-badge">
+                            ${isOptimal ? 'Optimal' : density > 2.5 ? 'Overused' : 'Underused'}
+                        </span>
+                    </td>
+                `;
+                keywordResults.appendChild(row);
+            });
+
+            resultsSection.classList.remove('d-none');
+        }
+
+        function getAllPhrases(words, maxLength) {
+            const phrases = new Map();
+            
+            for (let length = 1; length <= maxLength; length++) {
+                for (let i = 0; i <= words.length - length; i++) {
+                    const phrase = words.slice(i, i + length).join(' ');
+                    const count = phrases.get(phrase)?.count || 0;
+                    phrases.set(phrase, { count: count + 1 });
+                }
+            }
+            
+            return phrases;
+        }
+
+        function countSyllables(text) {
+            return text.toLowerCase()
+                .replace(/[^a-z]/g, '')
+                .replace(/[^aeiouy]*[aeiouy]+/g, 'a')
+                .length;
+        }
+
+        function calculateKeywordStats(phrases, totalWords) {
+            return Array.from(phrases.entries())
+                .map(([phrase, stats]) => [
+                    phrase,
+                    {
+                        ...stats,
+                        density: (stats.count / totalWords) * 100
+                    }
+                ]);
+        }
+    </script>
+</body>
+</html> 

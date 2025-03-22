@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema Markup Generator | JSON-LD Generator Tool - Multi-Tools Hub</title>
+    <meta name="description" content="Free Schema Markup Generator tool. Create JSON-LD structured data for Local Business, Article, Product, and FAQ schemas. Improve your SEO with rich snippets.">
+    <meta name="keywords" content="schema generator, json-ld generator, structured data generator, schema markup tool, SEO tools, rich snippets">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://your-domain.com/tools/seo/schema-generator.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Schema Markup Generator | JSON-LD Generator Tool">
+    <meta property="og:description" content="Create SEO-friendly schema markup with our free JSON-LD generator. Support for Local Business, Article, Product, and FAQ schemas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com/tools/seo/schema-generator.html">
+    <meta property="og:image" content="https://your-domain.com/images/schema-generator-og.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Schema Markup Generator | JSON-LD Generator Tool">
+    <meta name="twitter:description" content="Create SEO-friendly schema markup with our free JSON-LD generator. Support for Local Business, Article, Product, and FAQ schemas.">
+    <meta name="twitter:image" content="https://your-domain.com/images/schema-generator-og.jpg">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .schema-type-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .schema-type-card:hover {
+            transform: translateY(-5px);
+        }
+        .schema-type-card.selected {
+            border-color: #0d6efd;
+            background-color: #f8f9ff;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+        }
+        .required-field::after {
+            content: '*';
+            color: red;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../../index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="../index.html">SEO Tools</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Schema Generator</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Schema Markup Generator</h1>
+                <p class="lead text-center mb-5">Create SEO-optimized structured data for better search visibility</p>
+                
+                <!-- Tool Description -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h5">About This Schema Generator Tool</h2>
+                        <p class="card-text">
+                            Our free Schema Markup Generator helps create JSON-LD structured data to improve your website's SEO. Benefits include:
+                            <ul>
+                                <li>Enhanced search results with rich snippets</li>
+                                <li>Better search engine understanding of your content</li>
+                                <li>Improved click-through rates (CTR)</li>
+                                <li>Higher visibility in Google Search results</li>
+                                <li>Support for Local Business, Article, Product, and FAQ schemas</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Schema Type Selection -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Select Schema Type</h5>
+                        <div class="row g-4">
+                            <div class="col-md-3">
+                                <div class="card schema-type-card" data-schema="LocalBusiness">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-store fa-2x mb-3 text-primary"></i>
+                                        <h6>Local Business</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card schema-type-card" data-schema="Article">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-newspaper fa-2x mb-3 text-primary"></i>
+                                        <h6>Article</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card schema-type-card" data-schema="Product">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-shopping-cart fa-2x mb-3 text-primary"></i>
+                                        <h6>Product</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card schema-type-card" data-schema="FAQ">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-question-circle fa-2x mb-3 text-primary"></i>
+                                        <h6>FAQ</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schema Form -->
+                <div id="schemaForm" class="card mb-4 d-none">
+                    <div class="card-body">
+                        <h5 class="card-title">Enter Details</h5>
+                        <form id="markupForm">
+                            <!-- Dynamic form fields will be inserted here -->
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Generated Schema -->
+                <div id="outputSection" class="card mb-4 d-none">
+                    <div class="card-body">
+                        <h5 class="card-title">Generated Schema Markup</h5>
+                        <pre><code id="schemaOutput"></code>
+                            <button class="btn btn-sm btn-secondary copy-btn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">How to Use</h5>
+                        <ol class="mb-0">
+                            <li>Select the type of schema markup you need</li>
+                            <li>Fill in the required information in the form</li>
+                            <li>Copy the generated JSON-LD code</li>
+                            <li>Add the code to your website's <code>&lt;head&gt;</code> section</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title h5">Frequently Asked Questions</h2>
+                        <div class="accordion" id="schemaFAQ">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        What is Schema Markup?
+                                    </button>
+                                </h3>
+                                <div id="faq1" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        Schema markup is a code (semantic vocabulary) that you put on your website to help search engines return more informative results for users. It helps search engines understand your content better and can lead to rich snippets in search results.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        How do I implement schema markup on my website?
+                                    </button>
+                                </h3>
+                                <div id="faq2" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        After generating the schema markup, copy the JSON-LD code and paste it into the HTML head section of your webpage. You can also implement it through Google Tag Manager or your content management system's SEO plugins.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const schemaCards = document.querySelectorAll('.schema-type-card');
+        const schemaForm = document.getElementById('schemaForm');
+        const markupForm = document.getElementById('markupForm');
+        const outputSection = document.getElementById('outputSection');
+        const schemaOutput = document.getElementById('schemaOutput');
+        
+        // Schema type definitions
+        const schemaTypes = {
+            LocalBusiness: {
+                name: { type: 'text', label: 'Business Name', required: true },
+                description: { type: 'textarea', label: 'Business Description', required: true },
+                address: { type: 'text', label: 'Street Address', required: true },
+                city: { type: 'text', label: 'City', required: true },
+                state: { type: 'text', label: 'State', required: true },
+                postalCode: { type: 'text', label: 'Postal Code', required: true },
+                telephone: { type: 'tel', label: 'Phone Number', required: true },
+                website: { type: 'url', label: 'Website URL', required: true }
+            },
+            Article: {
+                headline: { type: 'text', label: 'Article Headline', required: true },
+                description: { type: 'textarea', label: 'Article Description', required: true },
+                author: { type: 'text', label: 'Author Name', required: true },
+                datePublished: { type: 'date', label: 'Date Published', required: true },
+                image: { type: 'url', label: 'Featured Image URL', required: true }
+            },
+            Product: {
+                name: { type: 'text', label: 'Product Name', required: true },
+                description: { type: 'textarea', label: 'Product Description', required: true },
+                price: { type: 'number', label: 'Price', required: true },
+                currency: { type: 'text', label: 'Currency Code (e.g., USD)', required: true },
+                image: { type: 'url', label: 'Product Image URL', required: true },
+                sku: { type: 'text', label: 'SKU', required: true }
+            },
+            FAQ: {
+                mainEntity: { type: 'array', label: 'FAQ Items', required: true }
+            }
+        };
+
+        // Handle schema type selection
+        schemaCards.forEach(card => {
+            card.addEventListener('click', () => {
+                schemaCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const schemaType = card.dataset.schema;
+                generateForm(schemaType);
+                schemaForm.classList.remove('d-none');
+                outputSection.classList.add('d-none');
+            });
+        });
+
+        function generateForm(schemaType) {
+            markupForm.innerHTML = '';
+            const fields = schemaTypes[schemaType];
+
+            for (const [key, field] of Object.entries(fields)) {
+                if (key === 'mainEntity' && schemaType === 'FAQ') {
+                    // Special handling for FAQ
+                    const faqContainer = document.createElement('div');
+                    faqContainer.innerHTML = `
+                        <div id="faqItems">
+                            <div class="faq-item mb-3">
+                                <div class="input-group mb-2">
+                                    <input type="text" class="form-control" placeholder="Question" required>
+                                </div>
+                                <div class="input-group">
+                                    <textarea class="form-control" placeholder="Answer" required rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addFAQItem()">
+                            Add Another Question
+                        </button>
+                    `;
+                    markupForm.appendChild(faqContainer);
+                } else {
+                    const formGroup = document.createElement('div');
+                    formGroup.className = 'mb-3';
+                    
+                    const label = document.createElement('label');
+                    label.className = field.required ? 'form-label required-field' : 'form-label';
+                    label.textContent = field.label;
+                    
+                    const input = field.type === 'textarea' 
+                        ? document.createElement('textarea')
+                        : document.createElement('input');
+                    
+                    input.className = 'form-control';
+                    if (field.type !== 'textarea') {
+                        input.type = field.type;
+                    } else {
+                        input.rows = 3;
+                    }
+                    input.name = key;
+                    input.required = field.required;
+
+                    formGroup.appendChild(label);
+                    formGroup.appendChild(input);
+                    markupForm.appendChild(formGroup);
+                }
+            }
+
+            const submitBtn = document.createElement('button');
+            submitBtn.type = 'submit';
+            submitBtn.className = 'btn btn-primary';
+            submitBtn.textContent = 'Generate Schema';
+            markupForm.appendChild(submitBtn);
+        }
+
+        function addFAQItem() {
+            const faqItems = document.getElementById('faqItems');
+            const newItem = document.createElement('div');
+            newItem.className = 'faq-item mb-3';
+            newItem.innerHTML = `
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" placeholder="Question" required>
+                </div>
+                <div class="input-group">
+                    <textarea class="form-control" placeholder="Answer" required rows="2"></textarea>
+                </div>
+            `;
+            faqItems.appendChild(newItem);
+        }
+
+        markupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedType = document.querySelector('.schema-type-card.selected').dataset.schema;
+            generateSchema(selectedType, this);
+        });
+
+        function generateSchema(type, form) {
+            let schema = {
+                "@context": "https://schema.org",
+                "@type": type
+            };
+
+            if (type === 'FAQ') {
+                const faqItems = document.querySelectorAll('.faq-item');
+                schema["@type"] = "FAQPage";
+                schema.mainEntity = [];
+
+                faqItems.forEach(item => {
+                    const question = item.querySelector('input').value;
+                    const answer = item.querySelector('textarea').value;
+                    
+                    schema.mainEntity.push({
+                        "@type": "Question",
+                        "name": question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": answer
+                        }
+                    });
+                });
+            } else {
+                const formData = new FormData(form);
+                for (const [key, value] of formData.entries()) {
+                    if (type === 'LocalBusiness' && key === 'address') {
+                        schema.address = {
+                            "@type": "PostalAddress",
+                            "streetAddress": value,
+                            "addressLocality": formData.get('city'),
+                            "addressRegion": formData.get('state'),
+                            "postalCode": formData.get('postalCode')
+                        };
+                    } else if (type === 'Product' && key === 'price') {
+                        schema.offers = {
+                            "@type": "Offer",
+                            "price": value,
+                            "priceCurrency": formData.get('currency')
+                        };
+                    } else if (!['city', 'state', 'postalCode', 'currency'].includes(key)) {
+                        schema[key] = value;
+                    }
+                }
+            }
+
+            const schemaString = JSON.stringify(schema, null, 2);
+            schemaOutput.textContent = `<script type="application/ld+json">\n${schemaString}\n<\/script>`;
+            outputSection.classList.remove('d-none');
+        }
+
+        // Copy functionality
+        document.querySelector('.copy-btn').addEventListener('click', function() {
+            const code = schemaOutput.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html> 

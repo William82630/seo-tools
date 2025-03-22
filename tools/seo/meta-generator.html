@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator - Multi-Tools Hub</title>
+    <meta name="description" content="Generate optimized meta tags for better SEO. Free online meta tags generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Tool Container -->
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">Meta Tag Generator</h1>
+                
+                <!-- Tool Description -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">About This Tool</h5>
+                        <p class="card-text">
+                            Generate optimized meta tags for your website to improve SEO performance.
+                            This tool helps create essential meta tags including title, description, keywords, and social media tags.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Input Form -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form id="metaForm">
+                            <!-- Basic Meta Tags -->
+                            <h5 class="mb-3">Basic Meta Tags</h5>
+                            <div class="mb-3">
+                                <label for="pageTitle" class="form-label">Page Title</label>
+                                <input type="text" class="form-control" id="pageTitle" placeholder="Enter page title">
+                                <div class="form-text">Recommended length: 50-60 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="metaDescription" class="form-label">Meta Description</label>
+                                <textarea class="form-control" id="metaDescription" rows="3" placeholder="Enter meta description"></textarea>
+                                <div class="form-text">Recommended length: 150-160 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="metaKeywords" class="form-label">Meta Keywords</label>
+                                <input type="text" class="form-control" id="metaKeywords" placeholder="keyword1, keyword2, keyword3">
+                                <div class="form-text">Separate keywords with commas</div>
+                            </div>
+
+                            <!-- Social Media Meta Tags -->
+                            <h5 class="mb-3 mt-4">Social Media Meta Tags</h5>
+                            <div class="mb-3">
+                                <label for="ogTitle" class="form-label">Open Graph Title</label>
+                                <input type="text" class="form-control" id="ogTitle" placeholder="Enter Open Graph title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ogDescription" class="form-label">Open Graph Description</label>
+                                <textarea class="form-control" id="ogDescription" rows="2" placeholder="Enter Open Graph description"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ogImage" class="form-label">Open Graph Image URL</label>
+                                <input type="url" class="form-control" id="ogImage" placeholder="https://example.com/image.jpg">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Generate Meta Tags</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Output Section -->
+                <div class="card mb-4 d-none" id="outputSection">
+                    <div class="card-body">
+                        <h5 class="card-title">Generated Meta Tags</h5>
+                        <div class="position-relative">
+                            <pre class="bg-light p-3 rounded"><code id="outputCode"></code></pre>
+                            <button class="btn btn-sm btn-secondary position-absolute top-0 end-0 m-3" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">How to Use</h5>
+                        <ol class="mb-0">
+                            <li>Fill in the basic meta tag information (title, description, keywords)</li>
+                            <li>Add social media meta tags if needed</li>
+                            <li>Click "Generate Meta Tags" to create your meta tags</li>
+                            <li>Copy the generated code and paste it in your HTML's head section</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Container -->
+    <div id="ad-container" class="text-center py-3">
+        <!-- AdSense code will go here -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const metaForm = document.getElementById('metaForm');
+        const outputSection = document.getElementById('outputSection');
+        const outputCode = document.getElementById('outputCode');
+        const copyBtn = document.getElementById('copyBtn');
+
+        metaForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateMetaTags();
+        });
+
+        function generateMetaTags() {
+            const title = document.getElementById('pageTitle').value;
+            const description = document.getElementById('metaDescription').value;
+            const keywords = document.getElementById('metaKeywords').value;
+            const ogTitle = document.getElementById('ogTitle').value || title;
+            const ogDescription = document.getElementById('ogDescription').value || description;
+            const ogImage = document.getElementById('ogImage').value;
+
+            let metaTags = `<title>${escapeHtml(title)}</title>\n`;
+            metaTags += `<meta name="description" content="${escapeHtml(description)}">\n`;
+            if (keywords) {
+                metaTags += `<meta name="keywords" content="${escapeHtml(keywords)}">\n`;
+            }
+
+            // Open Graph tags
+            metaTags += `<meta property="og:title" content="${escapeHtml(ogTitle)}">\n`;
+            metaTags += `<meta property="og:description" content="${escapeHtml(ogDescription)}">\n`;
+            if (ogImage) {
+                metaTags += `<meta property="og:image" content="${escapeHtml(ogImage)}">\n`;
+            }
+            metaTags += `<meta property="og:type" content="website">\n`;
+
+            // Twitter Card tags
+            metaTags += `<meta name="twitter:card" content="summary_large_image">\n`;
+            metaTags += `<meta name="twitter:title" content="${escapeHtml(ogTitle)}">\n`;
+            metaTags += `<meta name="twitter:description" content="${escapeHtml(ogDescription)}">\n`;
+            if (ogImage) {
+                metaTags += `<meta name="twitter:image" content="${escapeHtml(ogImage)}">\n`;
+            }
+
+            outputCode.textContent = metaTags;
+            outputSection.classList.remove('d-none');
+        }
+
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(outputCode.textContent).then(() => {
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html> 

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Resizer - Free Online Tool</title>
-    <meta name="description" content="Resize your images with precision using our free online tool. Maintain aspect ratio or set custom dimensions.">
+    <title>Image Format Converter - Free Online Tool</title>
+    <meta name="description" content="Convert images between different formats (PNG, JPG, WebP, GIF) with our free online tool.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -58,14 +58,8 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .resize-options {
+        .format-options {
             margin: 1rem 0;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 0.5rem;
-        }
-        .resize-options:hover {
-            background: #e9ecef;
         }
         .btn {
             transition: all 0.3s ease;
@@ -86,46 +80,14 @@
             color: #17a2b8;
             margin-right: 0.5rem;
         }
-        .dimension-inputs {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        .dimension-inputs .input-group {
-            max-width: 200px;
-        }
-        .preset-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-        .preset-btn {
+        .format-btn {
+            margin: 0.25rem;
             min-width: 100px;
         }
-        .preset-btn.active {
+        .format-btn.active {
             background-color: #007bff;
             color: white;
             border-color: #007bff;
-        }
-        .file-info {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
-        }
-        .file-info .info-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-        .file-info .info-label {
-            color: #6c757d;
-        }
-        .file-info .info-value {
-            font-weight: 500;
-            color: #007bff;
         }
     </style>
 </head>
@@ -145,7 +107,7 @@
                         <a href="background-remover.html" class="nav-link">
                             <i class="fas fa-eraser"></i>Background Remover
                         </a>
-                        <a href="format-converter.html" class="nav-link">
+                        <a href="format-converter.html" class="nav-link active">
                             <i class="fas fa-exchange-alt"></i>Format Converter
                         </a>
                         <a href="image-enhancer.html" class="nav-link">
@@ -154,7 +116,7 @@
                         <a href="image-compressor.html" class="nav-link">
                             <i class="fas fa-compress"></i>Compressor
                         </a>
-                        <a href="image-resizer.html" class="nav-link active">
+                        <a href="image-resizer.html" class="nav-link">
                             <i class="fas fa-expand"></i>Resizer
                         </a>
                     </div>
@@ -164,8 +126,8 @@
     </nav>
 
     <div class="container py-5">
-        <h1 class="text-center mb-4">Image Resizer</h1>
-        <p class="text-center mb-4">Resize your images with precision while maintaining quality.</p>
+        <h1 class="text-center mb-4">Image Format Converter</h1>
+        <p class="text-center mb-4">Convert your images between different formats with just a few clicks.</p>
 
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -186,60 +148,36 @@
                                 <img id="preview" src="" alt="Preview">
                             </div>
 
-                            <div class="file-info">
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fas fa-image me-2"></i>Original Size:</span>
-                                    <span class="info-value" id="originalDimensions">-</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fas fa-expand me-2"></i>New Size:</span>
-                                    <span class="info-value" id="newDimensions">-</span>
-                                </div>
+                            <div class="format-options text-center">
+                                <h6 class="mb-3">Select Output Format</h6>
+                                <button class="btn btn-outline-primary format-btn" data-format="png">
+                                    <i class="fas fa-file-image me-1"></i>PNG
+                                </button>
+                                <button class="btn btn-outline-primary format-btn" data-format="jpeg">
+                                    <i class="fas fa-image me-1"></i>JPEG
+                                </button>
+                                <button class="btn btn-outline-primary format-btn" data-format="webp">
+                                    <i class="fas fa-file me-1"></i>WebP
+                                </button>
+                                <button class="btn btn-outline-primary format-btn" data-format="gif">
+                                    <i class="fas fa-film me-1"></i>GIF
+                                </button>
                             </div>
 
-                            <div class="resize-options">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="maintainAspectRatio" checked>
-                                    <label class="form-check-label" for="maintainAspectRatio">
-                                        <i class="fas fa-link me-2"></i>Maintain Aspect Ratio
-                                    </label>
-                                </div>
-
-                                <div class="dimension-inputs">
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span>
-                                        <input type="number" class="form-control" id="widthInput" placeholder="Width">
-                                        <span class="input-group-text">px</span>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span>
-                                        <input type="number" class="form-control" id="heightInput" placeholder="Height">
-                                        <span class="input-group-text">px</span>
-                                    </div>
-                                </div>
-
-                                <div class="preset-buttons">
-                                    <button class="btn btn-outline-primary preset-btn" data-width="1920" data-height="1080">
-                                        <i class="fas fa-desktop me-1"></i>1920×1080
-                                    </button>
-                                    <button class="btn btn-outline-primary preset-btn" data-width="1280" data-height="720">
-                                        <i class="fas fa-laptop me-1"></i>1280×720
-                                    </button>
-                                    <button class="btn btn-outline-primary preset-btn" data-width="800" data-height="600">
-                                        <i class="fas fa-tablet-alt me-1"></i>800×600
-                                    </button>
-                                    <button class="btn btn-outline-primary preset-btn" data-width="640" data-height="480">
-                                        <i class="fas fa-mobile-alt me-1"></i>640×480
-                                    </button>
-                                </div>
+                            <div class="quality-slider mt-4">
+                                <label class="form-label d-flex justify-content-between">
+                                    <span>Quality</span>
+                                    <span id="qualityValue">80%</span>
+                                </label>
+                                <input type="range" class="form-range" id="quality" min="1" max="100" value="80">
                             </div>
 
                             <div class="d-flex justify-content-between mt-3">
                                 <button class="btn btn-secondary" id="resetBtn">
                                     <i class="fas fa-undo me-1"></i>Reset
                                 </button>
-                                <button class="btn btn-primary" id="resizeBtn">
-                                    <i class="fas fa-expand me-1"></i>Resize
+                                <button class="btn btn-primary" id="convertBtn">
+                                    <i class="fas fa-sync me-1"></i>Convert
                                 </button>
                                 <button class="btn btn-success" id="downloadBtn" style="display: none;">
                                     <i class="fas fa-download me-1"></i>Download
@@ -254,15 +192,15 @@
                         <h5>How to Use</h5>
                         <ol>
                             <li>Upload your image by dragging & dropping or clicking "Choose File"</li>
-                            <li>Choose a preset size or enter custom dimensions</li>
-                            <li>Toggle "Maintain Aspect Ratio" if needed</li>
-                            <li>Click "Resize" to process your image</li>
-                            <li>Click "Download" to save the resized image</li>
+                            <li>Select the desired output format (PNG, JPEG, WebP, or GIF)</li>
+                            <li>Adjust the quality slider if needed</li>
+                            <li>Click "Convert" to process your image</li>
+                            <li>Click "Download" to save the converted image</li>
                         </ol>
 
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle"></i>
-                            Tip: Keep "Maintain Aspect Ratio" checked to prevent image distortion. The tool will automatically calculate the best dimensions.
+                            Tip: PNG is best for images with transparency, JPEG for photos, WebP for web optimization, and GIF for animations.
                         </div>
                     </div>
                 </div>
@@ -291,16 +229,22 @@
         const fileInput = document.getElementById('fileInput');
         const editContainer = document.getElementById('editContainer');
         const preview = document.getElementById('preview');
-        const originalDimensions = document.getElementById('originalDimensions');
-        const newDimensions = document.getElementById('newDimensions');
-        const maintainAspectRatio = document.getElementById('maintainAspectRatio');
-        const widthInput = document.getElementById('widthInput');
-        const heightInput = document.getElementById('heightInput');
-        const resizeBtn = document.getElementById('resizeBtn');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const convertBtn = document.getElementById('convertBtn');
         const resetBtn = document.getElementById('resetBtn');
         const downloadBtn = document.getElementById('downloadBtn');
+        let selectedFormat = 'png';
         let originalImage = null;
-        let aspectRatio = 1;
+
+        // Handle format selection
+        document.querySelectorAll('.format-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedFormat = btn.dataset.format;
+            });
+        });
 
         // Handle drag and drop
         dropZone.addEventListener('dragover', (e) => {
@@ -336,68 +280,34 @@
                 originalImage.onload = () => {
                     preview.src = e.target.result;
                     editContainer.style.display = 'block';
-                    downloadBtn.style.display = 'none';
-                    
-                    // Set original dimensions
-                    aspectRatio = originalImage.width / originalImage.height;
-                    originalDimensions.textContent = `${originalImage.width}×${originalImage.height}`;
-                    
-                    // Set initial width maintaining aspect ratio
-                    widthInput.value = originalImage.width;
-                    heightInput.value = originalImage.height;
-                    updateDimensions();
+                    document.querySelector('[data-format="png"]').classList.add('active');
                 };
                 originalImage.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        // Handle preset buttons
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                widthInput.value = btn.dataset.width;
-                heightInput.value = btn.dataset.height;
-                updateDimensions();
-            });
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = qualitySlider.value + '%';
         });
 
-        // Handle dimension inputs
-        widthInput.addEventListener('input', () => {
-            if (maintainAspectRatio.checked) {
-                heightInput.value = Math.round(widthInput.value / aspectRatio);
-            }
-            updateDimensions();
-        });
-
-        heightInput.addEventListener('input', () => {
-            if (maintainAspectRatio.checked) {
-                widthInput.value = Math.round(heightInput.value * aspectRatio);
-            }
-            updateDimensions();
-        });
-
-        function updateDimensions() {
-            if (widthInput.value && heightInput.value) {
-                newDimensions.textContent = `${widthInput.value}×${heightInput.value}`;
-            }
-        }
-
-        resizeBtn.addEventListener('click', () => {
+        convertBtn.addEventListener('click', () => {
             if (!originalImage) return;
 
             const canvas = document.createElement('canvas');
-            canvas.width = parseInt(widthInput.value);
-            canvas.height = parseInt(heightInput.value);
+            canvas.width = originalImage.width;
+            canvas.height = originalImage.height;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(originalImage, 0, 0);
+
+            const quality = qualitySlider.value / 100;
+            const mimeType = `image/${selectedFormat}`;
             
             downloadBtn.style.display = 'block';
             downloadBtn.onclick = () => {
                 const link = document.createElement('a');
-                link.download = 'resized-image.png';
-                link.href = canvas.toDataURL('image/png');
+                link.download = `converted-image.${selectedFormat}`;
+                link.href = canvas.toDataURL(mimeType, quality);
                 link.click();
             };
         });
@@ -405,13 +315,15 @@
         resetBtn.addEventListener('click', () => {
             if (!originalImage) return;
             preview.src = originalImage.src;
-            widthInput.value = originalImage.width;
-            heightInput.value = originalImage.height;
-            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
-            maintainAspectRatio.checked = true;
-            updateDimensions();
+            qualitySlider.value = 80;
+            qualityValue.textContent = '80%';
+            document.querySelectorAll('.format-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-format="png"]').classList.add('active');
+            selectedFormat = 'png';
             downloadBtn.style.display = 'none';
         });
     </script>
+</body>
+</html> 
 </body>
 </html> 

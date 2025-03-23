@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Resizer - Free Online Tool</title>
-    <meta name="description" content="Resize your images with precision using our free online tool. Maintain aspect ratio or set custom dimensions.">
+    <title>Image Enhancer - Free Online Tool</title>
+    <meta name="description" content="Enhance your images with adjustable brightness, contrast, saturation, and more using our free online tool.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -51,21 +51,16 @@
             margin: 1rem 0;
             text-align: center;
         }
-        #preview {
+        #canvas {
             max-width: 100%;
             max-height: 400px;
             margin: 1rem 0;
+            background: #f8f9fa;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .resize-options {
+        .enhance-controls {
             margin: 1rem 0;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 0.5rem;
-        }
-        .resize-options:hover {
-            background: #e9ecef;
         }
         .btn {
             transition: all 0.3s ease;
@@ -86,46 +81,31 @@
             color: #17a2b8;
             margin-right: 0.5rem;
         }
-        .dimension-inputs {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        .dimension-inputs .input-group {
-            max-width: 200px;
-        }
-        .preset-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-        .preset-btn {
-            min-width: 100px;
-        }
-        .preset-btn.active {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
-        .file-info {
+        .slider-group {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
             background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem 0;
         }
-        .file-info .info-item {
+        .slider-group:hover {
+            background: #e9ecef;
+        }
+        .slider-label {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 0.5rem;
         }
-        .file-info .info-label {
+        .slider-label i {
             color: #6c757d;
+            width: 20px;
+            text-align: center;
         }
-        .file-info .info-value {
-            font-weight: 500;
+        .slider-value {
+            min-width: 50px;
+            text-align: right;
             color: #007bff;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -148,13 +128,13 @@
                         <a href="format-converter.html" class="nav-link">
                             <i class="fas fa-exchange-alt"></i>Format Converter
                         </a>
-                        <a href="image-enhancer.html" class="nav-link">
+                        <a href="image-enhancer.html" class="nav-link active">
                             <i class="fas fa-sliders-h"></i>Enhancer
                         </a>
                         <a href="image-compressor.html" class="nav-link">
                             <i class="fas fa-compress"></i>Compressor
                         </a>
-                        <a href="image-resizer.html" class="nav-link active">
+                        <a href="image-resizer.html" class="nav-link">
                             <i class="fas fa-expand"></i>Resizer
                         </a>
                     </div>
@@ -164,8 +144,8 @@
     </nav>
 
     <div class="container py-5">
-        <h1 class="text-center mb-4">Image Resizer</h1>
-        <p class="text-center mb-4">Resize your images with precision while maintaining quality.</p>
+        <h1 class="text-center mb-4">Image Enhancer</h1>
+        <p class="text-center mb-4">Enhance your images with professional-grade adjustments.</p>
 
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -183,54 +163,48 @@
 
                         <div id="editContainer" style="display: none;">
                             <div class="preview-container">
-                                <img id="preview" src="" alt="Preview">
+                                <canvas id="canvas"></canvas>
                             </div>
 
-                            <div class="file-info">
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fas fa-image me-2"></i>Original Size:</span>
-                                    <span class="info-value" id="originalDimensions">-</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label"><i class="fas fa-expand me-2"></i>New Size:</span>
-                                    <span class="info-value" id="newDimensions">-</span>
-                                </div>
-                            </div>
-
-                            <div class="resize-options">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="maintainAspectRatio" checked>
-                                    <label class="form-check-label" for="maintainAspectRatio">
-                                        <i class="fas fa-link me-2"></i>Maintain Aspect Ratio
-                                    </label>
-                                </div>
-
-                                <div class="dimension-inputs">
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span>
-                                        <input type="number" class="form-control" id="widthInput" placeholder="Width">
-                                        <span class="input-group-text">px</span>
+                            <div class="enhance-controls">
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span><i class="fas fa-sun"></i> Brightness</span>
+                                        <span class="slider-value" id="brightnessValue">0</span>
                                     </div>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span>
-                                        <input type="number" class="form-control" id="heightInput" placeholder="Height">
-                                        <span class="input-group-text">px</span>
-                                    </div>
+                                    <input type="range" class="form-range" id="brightness" min="-100" max="100" value="0">
                                 </div>
 
-                                <div class="preset-buttons">
-                                    <button class="btn btn-outline-primary preset-btn" data-width="1920" data-height="1080">
-                                        <i class="fas fa-desktop me-1"></i>1920×1080
-                                    </button>
-                                    <button class="btn btn-outline-primary preset-btn" data-width="1280" data-height="720">
-                                        <i class="fas fa-laptop me-1"></i>1280×720
-                                    </button>
-                                    <button class="btn btn-outline-primary preset-btn" data-width="800" data-height="600">
-                                        <i class="fas fa-tablet-alt me-1"></i>800×600
-                                    </button>
-                                    <button class="btn btn-outline-primary preset-btn" data-width="640" data-height="480">
-                                        <i class="fas fa-mobile-alt me-1"></i>640×480
-                                    </button>
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span><i class="fas fa-adjust"></i> Contrast</span>
+                                        <span class="slider-value" id="contrastValue">0</span>
+                                    </div>
+                                    <input type="range" class="form-range" id="contrast" min="-100" max="100" value="0">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span><i class="fas fa-palette"></i> Saturation</span>
+                                        <span class="slider-value" id="saturationValue">0</span>
+                                    </div>
+                                    <input type="range" class="form-range" id="saturation" min="-100" max="100" value="0">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span><i class="fas fa-lightbulb"></i> Exposure</span>
+                                        <span class="slider-value" id="exposureValue">0</span>
+                                    </div>
+                                    <input type="range" class="form-range" id="exposure" min="-100" max="100" value="0">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-label">
+                                        <span><i class="fas fa-temperature-high"></i> Warmth</span>
+                                        <span class="slider-value" id="warmthValue">0</span>
+                                    </div>
+                                    <input type="range" class="form-range" id="warmth" min="-100" max="100" value="0">
                                 </div>
                             </div>
 
@@ -238,10 +212,7 @@
                                 <button class="btn btn-secondary" id="resetBtn">
                                     <i class="fas fa-undo me-1"></i>Reset
                                 </button>
-                                <button class="btn btn-primary" id="resizeBtn">
-                                    <i class="fas fa-expand me-1"></i>Resize
-                                </button>
-                                <button class="btn btn-success" id="downloadBtn" style="display: none;">
+                                <button class="btn btn-success" id="downloadBtn">
                                     <i class="fas fa-download me-1"></i>Download
                                 </button>
                             </div>
@@ -254,15 +225,21 @@
                         <h5>How to Use</h5>
                         <ol>
                             <li>Upload your image by dragging & dropping or clicking "Choose File"</li>
-                            <li>Choose a preset size or enter custom dimensions</li>
-                            <li>Toggle "Maintain Aspect Ratio" if needed</li>
-                            <li>Click "Resize" to process your image</li>
-                            <li>Click "Download" to save the resized image</li>
+                            <li>Adjust the enhancement controls:
+                                <ul>
+                                    <li>Brightness: Adjust overall image lightness</li>
+                                    <li>Contrast: Enhance difference between light and dark areas</li>
+                                    <li>Saturation: Control color intensity</li>
+                                    <li>Exposure: Fine-tune image lighting</li>
+                                    <li>Warmth: Adjust color temperature</li>
+                                </ul>
+                            </li>
+                            <li>Click "Download" to save your enhanced image</li>
                         </ol>
 
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle"></i>
-                            Tip: Keep "Maintain Aspect Ratio" checked to prevent image distortion. The tool will automatically calculate the best dimensions.
+                            Tip: Start with subtle adjustments and gradually increase intensity for the most natural-looking results.
                         </div>
                     </div>
                 </div>
@@ -290,17 +267,20 @@
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const editContainer = document.getElementById('editContainer');
-        const preview = document.getElementById('preview');
-        const originalDimensions = document.getElementById('originalDimensions');
-        const newDimensions = document.getElementById('newDimensions');
-        const maintainAspectRatio = document.getElementById('maintainAspectRatio');
-        const widthInput = document.getElementById('widthInput');
-        const heightInput = document.getElementById('heightInput');
-        const resizeBtn = document.getElementById('resizeBtn');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
         const resetBtn = document.getElementById('resetBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         let originalImage = null;
-        let aspectRatio = 1;
+
+        // Enhancement controls
+        const controls = {
+            brightness: { elem: document.getElementById('brightness'), value: document.getElementById('brightnessValue') },
+            contrast: { elem: document.getElementById('contrast'), value: document.getElementById('contrastValue') },
+            saturation: { elem: document.getElementById('saturation'), value: document.getElementById('saturationValue') },
+            exposure: { elem: document.getElementById('exposure'), value: document.getElementById('exposureValue') },
+            warmth: { elem: document.getElementById('warmth'), value: document.getElementById('warmthValue') }
+        };
 
         // Handle drag and drop
         dropZone.addEventListener('dragover', (e) => {
@@ -334,83 +314,59 @@
             reader.onload = (e) => {
                 originalImage = new Image();
                 originalImage.onload = () => {
-                    preview.src = e.target.result;
+                    // Set canvas size
+                    const maxWidth = 800;
+                    const scale = Math.min(1, maxWidth / originalImage.width);
+                    canvas.width = originalImage.width * scale;
+                    canvas.height = originalImage.height * scale;
+                    
+                    // Show edit container and draw image
                     editContainer.style.display = 'block';
-                    downloadBtn.style.display = 'none';
-                    
-                    // Set original dimensions
-                    aspectRatio = originalImage.width / originalImage.height;
-                    originalDimensions.textContent = `${originalImage.width}×${originalImage.height}`;
-                    
-                    // Set initial width maintaining aspect ratio
-                    widthInput.value = originalImage.width;
-                    heightInput.value = originalImage.height;
-                    updateDimensions();
+                    applyEnhancements();
                 };
                 originalImage.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        // Handle preset buttons
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                widthInput.value = btn.dataset.width;
-                heightInput.value = btn.dataset.height;
-                updateDimensions();
+        // Add event listeners for all controls
+        Object.keys(controls).forEach(control => {
+            controls[control].elem.addEventListener('input', () => {
+                controls[control].value.textContent = controls[control].elem.value;
+                applyEnhancements();
             });
         });
 
-        // Handle dimension inputs
-        widthInput.addEventListener('input', () => {
-            if (maintainAspectRatio.checked) {
-                heightInput.value = Math.round(widthInput.value / aspectRatio);
-            }
-            updateDimensions();
-        });
-
-        heightInput.addEventListener('input', () => {
-            if (maintainAspectRatio.checked) {
-                widthInput.value = Math.round(heightInput.value * aspectRatio);
-            }
-            updateDimensions();
-        });
-
-        function updateDimensions() {
-            if (widthInput.value && heightInput.value) {
-                newDimensions.textContent = `${widthInput.value}×${heightInput.value}`;
-            }
-        }
-
-        resizeBtn.addEventListener('click', () => {
+        function applyEnhancements() {
             if (!originalImage) return;
 
-            const canvas = document.createElement('canvas');
-            canvas.width = parseInt(widthInput.value);
-            canvas.height = parseInt(heightInput.value);
-            const ctx = canvas.getContext('2d');
+            ctx.filter = `
+                brightness(${100 + parseInt(controls.brightness.elem.value)}%)
+                contrast(${100 + parseInt(controls.contrast.elem.value)}%)
+                saturate(${100 + parseInt(controls.saturation.elem.value)}%)
+                opacity(${100 + parseInt(controls.exposure.elem.value)}%)
+                sepia(${Math.abs(parseInt(controls.warmth.elem.value))}%)
+            `;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
-            
-            downloadBtn.style.display = 'block';
-            downloadBtn.onclick = () => {
-                const link = document.createElement('a');
-                link.download = 'resized-image.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            };
-        });
+            ctx.filter = 'none';
+        }
 
         resetBtn.addEventListener('click', () => {
             if (!originalImage) return;
-            preview.src = originalImage.src;
-            widthInput.value = originalImage.width;
-            heightInput.value = originalImage.height;
-            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
-            maintainAspectRatio.checked = true;
-            updateDimensions();
-            downloadBtn.style.display = 'none';
+            Object.keys(controls).forEach(control => {
+                controls[control].elem.value = 0;
+                controls[control].value.textContent = '0';
+            });
+            applyEnhancements();
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'enhanced-image.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         });
     </script>
 </body>

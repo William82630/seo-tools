@@ -7,47 +7,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .tool-card {
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            height: 100%;
-            background: white;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
         }
-        .tool-card:hover {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            transform: translateY(-5px);
-        }
-        .tool-icon {
+        h1 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .tool-icon.seo { color: #007bff; }
-        .tool-icon.image { color: #28a745; }
-        .tool-icon.text { color: #ffc107; }
-        .tool-icon.social { color: #dc3545; }
-        .use-tool-btn {
-            margin-top: 1rem;
+            margin-bottom: 0.5rem;
         }
         .section-title {
-            margin: 3rem 0 2rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #007bff;
+            border-bottom: 2px solid #0066ff;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
         }
-        body {
-            background-color: #f8f9fa;
-            padding-bottom: 3rem;
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
-        .main-title {
+        .tool-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
             text-align: center;
-            margin: 3rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .subtitle {
-            text-align: center;
-            color: #6c757d;
-            margin-bottom: 3rem;
+        .tool-icon {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .tool-title {
+            font-size: 1.5rem;
+            margin: 15px 0;
+        }
+        .tool-description {
+            color: #666;
+            margin-bottom: 20px;
+            min-height: 48px;
+        }
+        .use-tool {
+            color: #0066ff;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .use-tool:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -117,75 +125,61 @@
         </div>
 
         <h1 class="section-title">Image Tools</h1>
-        <div class="row g-4">
+        <div class="tools-grid">
             <!-- Effects & Filters -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-magic tool-icon image"></i>
-                    <h3>Effects & Filters</h3>
-                    <p>Apply various effects and filters to enhance your images.</p>
-                    <a href="tools/image/image-effects.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">✏️</div>
+                <h2 class="tool-title">Effects & Filters</h2>
+                <p class="tool-description">Apply various effects and filters to enhance your images.</p>
+                <a href="tools/image/image-effects.html" class="use-tool">Use Tool</a>
             </div>
 
             <!-- Image Cropper -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-crop tool-icon image"></i>
-                    <h3>Image Cropper</h3>
-                    <p>Crop and adjust your images with precision.</p>
-                    <a href="tools/image/image-cropper.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">✂️</div>
+                <h2 class="tool-title">Image Cropper</h2>
+                <p class="tool-description">Crop and adjust your images with precision.</p>
+                <a href="tools/image/image-cropper.html" class="use-tool">Use Tool</a>
             </div>
 
             <!-- Background Remover -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-eraser tool-icon image"></i>
-                    <h3>Background Remover</h3>
-                    <p>Remove image backgrounds with ease.</p>
-                    <a href="tools/image/background-remover.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">🗑️</div>
+                <h2 class="tool-title">Background Remover</h2>
+                <p class="tool-description">Remove image backgrounds with ease.</p>
+                <a href="tools/image/background-remover.html" class="use-tool">Use Tool</a>
             </div>
 
             <!-- Format Converter -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-exchange-alt tool-icon image"></i>
-                    <h3>Format Converter</h3>
-                    <p>Convert images between different formats (PNG, JPG, WebP).</p>
-                    <a href="tools/image/format-converter.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">↔️</div>
+                <h2 class="tool-title">Format Converter</h2>
+                <p class="tool-description">Convert images between different formats (PNG, JPG, WebP).</p>
+                <a href="tools/image/format-converter.html" class="use-tool">Use Tool</a>
             </div>
 
             <!-- Image Enhancer -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-sliders-h tool-icon image"></i>
-                    <h3>Image Enhancer</h3>
-                    <p>Enhance image quality and appearance.</p>
-                    <a href="tools/image/image-enhancer.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">⚙️</div>
+                <h2 class="tool-title">Image Enhancer</h2>
+                <p class="tool-description">Enhance image quality and appearance.</p>
+                <a href="tools/image/image-enhancer.html" class="use-tool">Use Tool</a>
             </div>
 
             <!-- Image Compressor -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-compress tool-icon image"></i>
-                    <h3>Image Compressor</h3>
-                    <p>Compress images for web use without losing quality.</p>
-                    <a href="tools/image/image-compressor.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">🔄</div>
+                <h2 class="tool-title">Image Compressor</h2>
+                <p class="tool-description">Compress images for web use without losing quality.</p>
+                <a href="tools/image/image-compressor.html" class="use-tool">Use Tool</a>
             </div>
 
             <!-- Image Resizer -->
-            <div class="col-md-4">
-                <div class="tool-card">
-                    <i class="fas fa-expand tool-icon image"></i>
-                    <h3>Image Resizer</h3>
-                    <p>Resize images to desired dimensions.</p>
-                    <a href="tools/image/image-resizer.html" class="btn btn-primary use-tool-btn">Use Tool</a>
-                </div>
+            <div class="tool-card">
+                <div class="tool-icon">📐</div>
+                <h2 class="tool-title">Image Resizer</h2>
+                <p class="tool-description">Resize images to desired dimensions.</p>
+                <a href="tools/image/image-resizer.html" class="use-tool">Use Tool</a>
             </div>
         </div>
 

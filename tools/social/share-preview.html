@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Share Preview - Free Online Tool</title>
+    <meta name="description" content="Preview how your content will look when shared on social media platforms. Free online social share preview tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .preview-card {
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        .preview-card.facebook {
+            border-left: 4px solid #1877f2;
+        }
+        .preview-card.twitter {
+            border-left: 4px solid #1da1f2;
+        }
+        .preview-card.linkedin {
+            border-left: 4px solid #0a66c2;
+        }
+        .preview-card.instagram {
+            border-left: 4px solid #e4405f;
+        }
+        .preview-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        .preview-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .preview-description {
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        .preview-url {
+            color: #0d6efd;
+            font-size: 0.875rem;
+        }
+        .character-count {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        .character-count.warning {
+            color: #ffc107;
+        }
+        .character-count.danger {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Social Share Preview</h1>
+        <p class="text-center mb-4">Preview how your content will look when shared on social media.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="previewForm">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" placeholder="Enter title">
+                                <div class="character-count" id="titleCount">0/60 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3" placeholder="Enter description"></textarea>
+                                <div class="character-count" id="descriptionCount">0/160 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="url" class="form-label">URL</label>
+                                <input type="url" class="form-control" id="url" placeholder="https://example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image URL</label>
+                                <input type="url" class="form-control" id="image" placeholder="https://example.com/image.jpg">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Platforms</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="facebook" checked>
+                                    <label class="form-check-label" for="facebook">Facebook</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="twitter" checked>
+                                    <label class="form-check-label" for="twitter">Twitter</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="linkedin" checked>
+                                    <label class="form-check-label" for="linkedin">LinkedIn</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="instagram" checked>
+                                    <label class="form-check-label" for="instagram">Instagram</label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="mt-4">
+                            <h5>Preview:</h5>
+                            <div id="previewContainer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5>How to Use</h5>
+                        <ol>
+                            <li>Enter your content details (title, description, URL, image)</li>
+                            <li>Select the platforms you want to preview</li>
+                            <li>Watch the preview update in real-time</li>
+                            <li>Check character counts and formatting</li>
+                        </ol>
+
+                        <h5>Platform Guidelines</h5>
+                        <ul>
+                            <li><strong>Facebook:</strong> Title (60 chars), Description (160 chars)</li>
+                            <li><strong>Twitter:</strong> Title (280 chars), Description (280 chars)</li>
+                            <li><strong>LinkedIn:</strong> Title (150 chars), Description (200 chars)</li>
+                            <li><strong>Instagram:</strong> Title (30 chars), Description (2200 chars)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const titleInput = document.getElementById('title');
+        const descriptionInput = document.getElementById('description');
+        const urlInput = document.getElementById('url');
+        const imageInput = document.getElementById('image');
+        const titleCount = document.getElementById('titleCount');
+        const descriptionCount = document.getElementById('descriptionCount');
+        const previewContainer = document.getElementById('previewContainer');
+
+        // Update character counts
+        titleInput.addEventListener('input', updateCharacterCount);
+        descriptionInput.addEventListener('input', updateCharacterCount);
+
+        // Update preview when inputs change
+        [titleInput, descriptionInput, urlInput, imageInput].forEach(input => {
+            input.addEventListener('input', updatePreview);
+        });
+
+        // Update preview when platform checkboxes change
+        ['facebook', 'twitter', 'linkedin', 'instagram'].forEach(platform => {
+            document.getElementById(platform).addEventListener('change', updatePreview);
+        });
+
+        function updateCharacterCount() {
+            const titleLength = titleInput.value.length;
+            const descriptionLength = descriptionInput.value.length;
+
+            updateCountElement(titleCount, titleLength, 60);
+            updateCountElement(descriptionCount, descriptionLength, 160);
+        }
+
+        function updateCountElement(element, current, max) {
+            element.textContent = `${current}/${max} characters`;
+            element.className = 'character-count';
+            if (current > max * 0.9) {
+                element.classList.add('danger');
+            } else if (current > max * 0.8) {
+                element.classList.add('warning');
+            }
+        }
+
+        function updatePreview() {
+            previewContainer.innerHTML = '';
+            const title = titleInput.value;
+            const description = descriptionInput.value;
+            const url = urlInput.value;
+            const image = imageInput.value;
+
+            if (document.getElementById('facebook').checked) {
+                addPreviewCard('facebook', title, description, url, image);
+            }
+            if (document.getElementById('twitter').checked) {
+                addPreviewCard('twitter', title, description, url, image);
+            }
+            if (document.getElementById('linkedin').checked) {
+                addPreviewCard('linkedin', title, description, url, image);
+            }
+            if (document.getElementById('instagram').checked) {
+                addPreviewCard('instagram', title, description, url, image);
+            }
+        }
+
+        function addPreviewCard(platform, title, description, url, image) {
+            const card = document.createElement('div');
+            card.className = `preview-card ${platform}`;
+            
+            let content = '';
+            if (image) {
+                content += `<img src="${image}" alt="${title}" class="preview-image">`;
+            }
+            content += `
+                <div class="preview-title">${title || 'No title'}</div>
+                <div class="preview-description">${description || 'No description'}</div>
+                <div class="preview-url">${url || 'No URL'}</div>
+            `;
+            
+            card.innerHTML = content;
+            previewContainer.appendChild(card);
+        }
+
+        // Initial preview
+        updatePreview();
+    </script>
+</body>
+</html> 

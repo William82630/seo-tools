@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Calendar - Free Online Tool</title>
+    <meta name="description" content="Plan and organize your social media content with our free online calendar tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .calendar-day {
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        .calendar-day:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .post-item {
+            background-color: #f8f9fa;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        .post-item:hover {
+            background-color: #e9ecef;
+        }
+        .platform-icon {
+            margin-right: 0.5rem;
+        }
+        .platform-icon.facebook { color: #1877f2; }
+        .platform-icon.twitter { color: #1da1f2; }
+        .platform-icon.linkedin { color: #0a66c2; }
+        .platform-icon.instagram { color: #e4405f; }
+        .post-time {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        .add-post-btn {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Social Media Calendar</h1>
+        <p class="text-center mb-4">Plan and organize your social media content.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="postForm">
+                            <div class="mb-3">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="platform" class="form-label">Platform</label>
+                                <select class="form-select" id="platform" required>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="instagram">Instagram</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="time" class="form-label">Time</label>
+                                <input type="time" class="form-control" id="time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Content</label>
+                                <textarea class="form-control" id="content" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                Add Post
+                            </button>
+                        </form>
+
+                        <div class="mt-4">
+                            <h5>Calendar:</h5>
+                            <div id="calendarContainer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5>How to Use</h5>
+                        <ol>
+                            <li>Select a date for your post</li>
+                            <li>Choose the social media platform</li>
+                            <li>Set the posting time</li>
+                            <li>Enter your content</li>
+                            <li>Click "Add Post" to schedule</li>
+                            <li>View your calendar below</li>
+                        </ol>
+
+                        <h5>Tips for Social Media Planning</h5>
+                        <ul>
+                            <li>Plan content in advance</li>
+                            <li>Maintain consistent posting schedule</li>
+                            <li>Mix different types of content</li>
+                            <li>Consider time zones for your audience</li>
+                            <li>Track engagement and adjust timing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const postForm = document.getElementById('postForm');
+        const calendarContainer = document.getElementById('calendarContainer');
+        let posts = JSON.parse(localStorage.getItem('socialMediaPosts')) || {};
+
+        // Set default date to today
+        document.getElementById('date').valueAsDate = new Date();
+
+        postForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('date').value;
+            const platform = document.getElementById('platform').value;
+            const time = document.getElementById('time').value;
+            const content = document.getElementById('content').value;
+
+            // Create post object
+            const post = {
+                platform,
+                time,
+                content,
+                id: Date.now()
+            };
+
+            // Add post to storage
+            if (!posts[date]) {
+                posts[date] = [];
+            }
+            posts[date].push(post);
+
+            // Save to localStorage
+            localStorage.setItem('socialMediaPosts', JSON.stringify(posts));
+
+            // Update calendar
+            updateCalendar();
+
+            // Reset form
+            postForm.reset();
+            document.getElementById('date').valueAsDate = new Date();
+        });
+
+        function updateCalendar() {
+            calendarContainer.innerHTML = '';
+            
+            // Sort dates
+            const sortedDates = Object.keys(posts).sort();
+
+            sortedDates.forEach(date => {
+                const dayContainer = document.createElement('div');
+                dayContainer.className = 'calendar-day';
+                
+                const dateHeader = document.createElement('h6');
+                dateHeader.textContent = new Date(date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                dayContainer.appendChild(dateHeader);
+
+                // Sort posts by time
+                posts[date].sort((a, b) => a.time.localeCompare(b.time));
+
+                posts[date].forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post-item';
+                    postElement.innerHTML = `
+                        <i class="fas fa-${getPlatformIcon(post.platform)} platform-icon ${post.platform}"></i>
+                        <span class="post-time">${post.time}</span>
+                        <div class="post-content">${post.content}</div>
+                        <button class="btn btn-sm btn-danger float-end" onclick="deletePost('${date}', ${post.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    dayContainer.appendChild(postElement);
+                });
+
+                calendarContainer.appendChild(dayContainer);
+            });
+        }
+
+        function getPlatformIcon(platform) {
+            switch(platform) {
+                case 'facebook': return 'facebook';
+                case 'twitter': return 'twitter';
+                case 'linkedin': return 'linkedin';
+                case 'instagram': return 'instagram';
+                default: return 'share-alt';
+            }
+        }
+
+        function deletePost(date, id) {
+            posts[date] = posts[date].filter(post => post.id !== id);
+            if (posts[date].length === 0) {
+                delete posts[date];
+            }
+            localStorage.setItem('socialMediaPosts', JSON.stringify(posts));
+            updateCalendar();
+        }
+
+        // Initial calendar update
+        updateCalendar();
+    </script>
+</body>
+</html> 

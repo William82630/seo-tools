@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Sitemap Generator - Free Online Tool</title>
+    <meta name="description" content="Generate XML sitemaps for your website. Free, fast, and easy to use sitemap generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .url-input {
+            margin-bottom: 10px;
+        }
+        .priority-select {
+            width: 100px;
+        }
+        .frequency-select {
+            width: 150px;
+        }
+        .url-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .url-item {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        .url-item:hover {
+            background-color: #f8f9fa;
+        }
+        .remove-url {
+            color: #dc3545;
+            cursor: pointer;
+        }
+        .remove-url:hover {
+            color: #c82333;
+        }
+        #output {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">XML Sitemap Generator</h1>
+        <p class="text-center mb-4">Generate XML sitemaps for your website with customizable priorities and update frequencies.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h5>Add URLs</h5>
+                            <div class="input-group url-input">
+                                <input type="url" class="form-control" id="urlInput" placeholder="Enter URL (e.g., https://example.com/page)">
+                                <select class="form-select priority-select" id="prioritySelect">
+                                    <option value="1.0">1.0</option>
+                                    <option value="0.9">0.9</option>
+                                    <option value="0.8">0.8</option>
+                                    <option value="0.7">0.7</option>
+                                    <option value="0.6">0.6</option>
+                                    <option value="0.5">0.5</option>
+                                </select>
+                                <select class="form-select frequency-select" id="frequencySelect">
+                                    <option value="always">Always</option>
+                                    <option value="hourly">Hourly</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="yearly">Yearly</option>
+                                    <option value="never">Never</option>
+                                </select>
+                                <button class="btn btn-primary" id="addUrlBtn">
+                                    Add URL
+                                </button>
+                            </div>
+                            <div class="url-list" id="urlList"></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5>Generated Sitemap</h5>
+                            <div id="output" class="d-none"></div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-success" id="generateBtn">
+                                Generate Sitemap
+                            </button>
+                            <button class="btn btn-primary d-none" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5>How to Use</h5>
+                        <ol>
+                            <li>Enter a URL in the input field</li>
+                            <li>Select priority (0.0 to 1.0)</li>
+                            <li>Select update frequency</li>
+                            <li>Click "Add URL"</li>
+                            <li>Repeat for all your URLs</li>
+                            <li>Click "Generate Sitemap"</li>
+                            <li>Copy the generated XML</li>
+                        </ol>
+
+                        <h5>Features</h5>
+                        <ul>
+                            <li>Customizable URL priorities</li>
+                            <li>Update frequency settings</li>
+                            <li>Multiple URL support</li>
+                            <li>Easy URL management</li>
+                            <li>Copy to clipboard functionality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlInput = document.getElementById('urlInput');
+        const prioritySelect = document.getElementById('prioritySelect');
+        const frequencySelect = document.getElementById('frequencySelect');
+        const addUrlBtn = document.getElementById('addUrlBtn');
+        const urlList = document.getElementById('urlList');
+        const generateBtn = document.getElementById('generateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const output = document.getElementById('output');
+
+        let urls = [];
+
+        addUrlBtn.addEventListener('click', () => {
+            const url = urlInput.value.trim();
+            if (url && isValidUrl(url)) {
+                urls.push({
+                    url: url,
+                    priority: prioritySelect.value,
+                    frequency: frequencySelect.value,
+                    lastmod: new Date().toISOString().split('T')[0]
+                });
+                updateUrlList();
+                urlInput.value = '';
+            } else {
+                alert('Please enter a valid URL');
+            }
+        });
+
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        function updateUrlList() {
+            urlList.innerHTML = '';
+            urls.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'url-item d-flex justify-content-between align-items-center';
+                div.innerHTML = `
+                    <div>
+                        <strong>${item.url}</strong>
+                        <br>
+                        <small class="text-muted">
+                            Priority: ${item.priority} | Frequency: ${item.frequency}
+                        </small>
+                    </div>
+                    <i class="fas fa-times remove-url" data-index="${index}"></i>
+                `;
+                urlList.appendChild(div);
+            });
+
+            urlList.querySelectorAll('.remove-url').forEach(icon => {
+                icon.addEventListener('click', () => {
+                    const index = parseInt(icon.dataset.index);
+                    urls.splice(index, 1);
+                    updateUrlList();
+                });
+            });
+        }
+
+        generateBtn.addEventListener('click', () => {
+            if (urls.length === 0) {
+                alert('Please add at least one URL');
+                return;
+            }
+
+            const xml = generateSitemap();
+            output.textContent = xml;
+            output.classList.remove('d-none');
+            copyBtn.classList.remove('d-none');
+        });
+
+        copyBtn.addEventListener('click', () => {
+            output.select();
+            document.execCommand('copy');
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy to Clipboard';
+            }, 2000);
+        });
+
+        function generateSitemap() {
+            const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(item => `  <url>
+    <loc>${item.url}</loc>
+    <lastmod>${item.lastmod}</lastmod>
+    <changefreq>${item.frequency}</changefreq>
+    <priority>${item.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+            return xml;
+        }
+    </script>
+</body>
+</html> 

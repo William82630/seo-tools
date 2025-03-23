@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Generator - Free Online Tool</title>
+    <meta name="description" content="Generate relevant hashtags for your social media posts. Free online hashtag generator tool.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .hashtag {
+            display: inline-block;
+            margin: 0.25rem;
+            padding: 0.5rem 1rem;
+            background-color: #e9ecef;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .hashtag:hover {
+            background-color: #dee2e6;
+        }
+        .hashtag.selected {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Hashtag Generator</h1>
+        <p class="text-center mb-4">Generate relevant hashtags for your social media posts.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="hashtagForm">
+                            <div class="mb-3">
+                                <label for="topic" class="form-label">Enter Topic or Keywords</label>
+                                <input type="text" class="form-control" id="topic" placeholder="e.g., digital marketing, technology, lifestyle">
+                            </div>
+                            <div class="mb-3">
+                                <label for="platform" class="form-label">Select Platform</label>
+                                <select class="form-select" id="platform">
+                                    <option value="instagram">Instagram</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="facebook">Facebook</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                Generate Hashtags
+                            </button>
+                        </form>
+
+                        <div class="mt-4">
+                            <h5>Generated Hashtags:</h5>
+                            <div id="hashtagContainer" class="mt-3"></div>
+                            <button class="btn btn-success mt-3" onclick="copyHashtags()">
+                                <i class="fas fa-copy"></i> Copy All Hashtags
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5>How to Use</h5>
+                        <ol>
+                            <li>Enter your topic or keywords</li>
+                            <li>Select your social media platform</li>
+                            <li>Click "Generate Hashtags"</li>
+                            <li>Click on hashtags to select/deselect</li>
+                            <li>Copy selected hashtags to clipboard</li>
+                        </ol>
+
+                        <h5>Tips for Using Hashtags</h5>
+                        <ul>
+                            <li>Use a mix of popular and niche hashtags</li>
+                            <li>Keep hashtags relevant to your content</li>
+                            <li>Don't overuse hashtags (platform limits vary)</li>
+                            <li>Research trending hashtags in your niche</li>
+                            <li>Create branded hashtags for your business</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hashtagDatabase = {
+            'digital marketing': ['#digitalmarketing', '#marketing', '#socialmedia', '#contentmarketing', '#seo', '#digital', '#business', '#entrepreneur', '#marketingtips', '#branding'],
+            'technology': ['#tech', '#technology', '#innovation', '#future', '#ai', '#digital', '#coding', '#programming', '#software', '#hardware'],
+            'lifestyle': ['#lifestyle', '#life', '#lifestyleblogger', '#inspiration', '#motivation', '#health', '#wellness', '#fitness', '#food', '#travel'],
+            'business': ['#business', '#entrepreneur', '#startup', '#smallbusiness', '#businessowner', '#marketing', '#success', '#entrepreneurship', '#businesswoman', '#businessman'],
+            'fashion': ['#fashion', '#style', '#fashionblogger', '#ootd', '#fashionista', '#styleblogger', '#fashionstyle', '#fashionaddict', '#fashionlover', '#fashioninspo'],
+            'food': ['#food', '#foodie', '#foodblogger', '#foodporn', '#foodstagram', '#foodphotography', '#foodlover', '#foodies', '#foodgasm', '#foodshare'],
+            'travel': ['#travel', '#travelblogger', '#wanderlust', '#travelphotography', '#travelgram', '#travelling', '#traveler', '#traveling', '#traveladdict', '#traveltheworld']
+        };
+
+        document.getElementById('hashtagForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const topic = document.getElementById('topic').value.toLowerCase();
+            const platform = document.getElementById('platform').value;
+            generateHashtags(topic, platform);
+        });
+
+        function generateHashtags(topic, platform) {
+            const container = document.getElementById('hashtagContainer');
+            container.innerHTML = '';
+
+            // Get relevant hashtags from database
+            let hashtags = [];
+            for (const [key, value] of Object.entries(hashtagDatabase)) {
+                if (topic.includes(key)) {
+                    hashtags = [...hashtags, ...value];
+                }
+            }
+
+            // Add some generic hashtags based on platform
+            switch(platform) {
+                case 'instagram':
+                    hashtags.push('#instagram', '#instagood', '#insta', '#instagrammers', '#instadaily');
+                    break;
+                case 'twitter':
+                    hashtags.push('#twitter', '#tweet', '#tweeter', '#twitterverse', '#tweeting');
+                    break;
+                case 'linkedin':
+                    hashtags.push('#linkedin', '#professional', '#networking', '#career', '#business');
+                    break;
+                case 'facebook':
+                    hashtags.push('#facebook', '#fb', '#social', '#socialmedia', '#community');
+                    break;
+            }
+
+            // Remove duplicates and limit to 20 hashtags
+            hashtags = [...new Set(hashtags)].slice(0, 20);
+
+            // Create hashtag elements
+            hashtags.forEach(hashtag => {
+                const span = document.createElement('span');
+                span.className = 'hashtag';
+                span.textContent = hashtag;
+                span.onclick = function() {
+                    this.classList.toggle('selected');
+                };
+                container.appendChild(span);
+            });
+        }
+
+        function copyHashtags() {
+            const selectedHashtags = Array.from(document.querySelectorAll('.hashtag.selected'))
+                .map(el => el.textContent)
+                .join(' ');
+            
+            if (selectedHashtags) {
+                navigator.clipboard.writeText(selectedHashtags).then(() => {
+                    alert('Hashtags copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy hashtags: ', err);
+                    alert('Failed to copy hashtags. Please try again.');
+                });
+            } else {
+                alert('Please select at least one hashtag to copy.');
+            }
+        }
+    </script>
+</body>
+</html> 

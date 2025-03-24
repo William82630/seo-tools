@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO & Image Tools Hub 2025</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* All CSS styles from style.css */
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--bg-light);
+        }
+
+        /* Header Styles */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Category Styles */
+        .category-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        /* Tool Card Styles */
+        .tool-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tool-card .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card .card-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card .card-text {
+            flex-grow: 1;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .tool-card .btn {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* Icon Styles */
+        .tool-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Ad Container Styles */
+        #ad-container {
+            background-color: #fff;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 1.5rem;
+            }
+            
+            .tool-card .card-title {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation for tool cards */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Search highlight effect */
+        .highlight {
+            background-color: rgba(13, 110, 253, 0.1);
+            border-radius: 3px;
+        }
+
+        /* Common Navigation Styles */
+        .tools-nav {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .tools-nav .nav-link {
+            color: #6c757d;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .tools-nav .nav-link:hover {
+            color: #007bff;
+            background: #e9ecef;
+        }
+
+        .tools-nav .nav-link.active {
+            color: #fff;
+            background: #007bff;
+        }
+
+        .tools-nav .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        /* Drop Zone Styles */
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone:hover {
+            background: #e9ecef;
+            border-color: #007bff;
+        }
+
+        /* Preview Container */
+        .preview-container {
+            max-width: 100%;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        /* Button Styles */
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Icon Styles */
+        .fa-cloud-upload-alt {
+            color: #007bff;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* Alert Styles */
+        .alert-info {
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-info i {
+            color: #17a2b8;
+            margin-right: 0.5rem;
+        }
+
+        /* Card Styles */
+        .card {
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        footer h5 {
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        footer i {
+            margin-right: 0.5rem;
+            color: #007bff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tools-nav .nav-link {
+                margin: 0.25rem;
+                font-size: 0.9rem;
+            }
+            
+            .drop-zone {
+                padding: 1rem;
+            }
+            
+            .preview-container {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #007bff;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* File Info Styles */
+        .file-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .file-info .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-info .info-label {
+            color: #6c757d;
+        }
+
+        .file-info .info-value {
+            font-weight: 500;
+            color: #007bff;
+        }
+
+        /* Slider Styles */
+        .slider-group {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            background: #f8f9fa;
+        }
+
+        .slider-group:hover {
+            background: #e9ecef;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-label i {
+            color: #6c757d;
+            width: 20px;
+            text-align: center;
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: right;
+            color: #007bff;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">SEO & Image Tools Hub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#seo-tools">SEO Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#image-tools">Image Tools</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Search Bar -->
+        <div class="search-container mb-4">
+            <input type="text" id="searchTools" class="form-control" placeholder="Search tools...">
+        </div>
+
+        <!-- SEO Tools Section -->
+        <section id="seo-tools">
+            <h2 class="category-title">SEO Tools</h2>
+            <div class="row" id="seoTools">
+                <!-- Tool cards will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Image Tools Section -->
+        <section id="image-tools" class="mt-5">
+            <h2 class="category-title">Image Tools</h2>
+            <div class="row" id="imageTools">
+                <!-- Tool cards will be dynamically added here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>About SEO & Image Tools Hub</h5>
+                    <p>A comprehensive collection of free SEO and image optimization tools to help improve your online presence.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#seo-tools">SEO Tools</a></li>
+                        <li><a href="#image-tools">Image Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // All JavaScript from main.js
+        const toolsData = {
+            seoTools: [
+                {
+                    id: 'keyword-density',
+                    title: 'Keyword Density Checker',
+                    description: 'Analyze keyword density in your content for better SEO optimization.',
+                    icon: 'fa-search',
+                    path: '#keyword-density'
+                },
+                {
+                    id: 'serp-preview',
+                    title: 'SERP Preview Tool',
+                    description: 'See how your page will appear in search results.',
+                    icon: 'fa-eye',
+                    path: '#serp-preview'
+                },
+                {
+                    id: 'schema-generator',
+                    title: 'Schema Generator',
+                    description: 'Generate structured data markup for better search visibility.',
+                    icon: 'fa-code',
+                    path: '#schema-generator'
+                }
+            ],
+            imageTools: [
+                {
+                    id: 'image-effects',
+                    title: 'Image Effects',
+                    description: 'Apply professional photo filters and effects to your images.',
+                    icon: 'fa-magic',
+                    path: '#image-effects'
+                },
+                {
+                    id: 'image-cropper',
+                    title: 'Image Cropper',
+                    description: 'Crop and resize images with precision.',
+                    icon: 'fa-crop',
+                    path: '#image-cropper'
+                },
+                {
+                    id: 'background-remover',
+                    title: 'Background Remover',
+                    description: 'Remove image backgrounds instantly with AI technology.',
+                    icon: 'fa-cut',
+                    path: '#background-remover'
+                },
+                {
+                    id: 'format-converter',
+                    title: 'Format Converter',
+                    description: 'Convert images between different formats (PNG, JPG, WebP).',
+                    icon: 'fa-exchange-alt',
+                    path: '#format-converter'
+                },
+                {
+                    id: 'image-enhancer',
+                    title: 'Image Enhancer',
+                    description: 'Enhance your photos with professional adjustments.',
+                    icon: 'fa-adjust',
+                    path: '#image-enhancer'
+                },
+                {
+                    id: 'image-compressor',
+                    title: 'Image Compressor',
+                    description: 'Compress images while maintaining quality.',
+                    icon: 'fa-compress',
+                    path: '#image-compressor'
+                },
+                {
+                    id: 'image-resizer',
+                    title: 'Image Resizer',
+                    description: 'Resize images to any dimensions you need.',
+                    icon: 'fa-expand',
+                    path: '#image-resizer'
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize tool cards
+            renderTools();
+            
+            // Initialize search functionality
+            const searchInput = document.getElementById('searchTools');
+            searchInput.addEventListener('input', handleSearch);
+        });
+
+        function renderTools() {
+            // Render each category of tools
+            renderToolCategory('imageTools', document.getElementById('imageTools'));
+            renderToolCategory('seoTools', document.getElementById('seoTools'));
+        }
+
+        function renderToolCategory(category, container) {
+            const tools = toolsData[category];
+            tools.forEach(tool => {
+                const toolCard = createToolCard(tool);
+                container.appendChild(toolCard);
+            });
+        }
+
+        function createToolCard(tool) {
+            const col = document.createElement('div');
+            col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+            
+            const card = document.createElement('div');
+            card.className = 'card tool-card h-100';
+            card.setAttribute('data-tool-id', tool.id);
+            card.setAttribute('data-tool-title', tool.title.toLowerCase());
+            card.setAttribute('data-tool-description', tool.description.toLowerCase());
+            
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body text-center';
+            
+            const icon = document.createElement('i');
+            icon.className = `fas ${tool.icon} tool-icon`;
+            
+            const title = document.createElement('h5');
+            title.className = 'card-title';
+            title.textContent = tool.title;
+            
+            const description = document.createElement('p');
+            description.className = 'card-text';
+            description.textContent = tool.description;
+            
+            const button = document.createElement('a');
+            button.href = tool.path;
+            button.className = 'btn btn-primary mt-auto';
+            button.textContent = 'Use Tool';
+            
+            cardBody.appendChild(icon);
+            cardBody.appendChild(title);
+            cardBody.appendChild(description);
+            cardBody.appendChild(button);
+            card.appendChild(cardBody);
+            col.appendChild(card);
+            
+            return col;
+        }
+
+        function handleSearch(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            const allTools = document.querySelectorAll('.tool-card');
+            
+            allTools.forEach(tool => {
+                const title = tool.getAttribute('data-tool-title');
+                const description = tool.getAttribute('data-tool-description');
+                const isMatch = title.includes(searchTerm) || description.includes(searchTerm);
+                
+                tool.closest('.col-12').style.display = isMatch ? 'block' : 'none';
+            });
+            
+            // Show/hide category titles based on visible tools
+            document.querySelectorAll('.category-title').forEach(title => {
+                const categoryContainer = title.nextElementSibling;
+                const visibleTools = categoryContainer.querySelectorAll('.col-12[style="display: block"]');
+                title.style.display = visibleTools.length > 0 ? 'block' : 'none';
+            });
+        }
+
+        // Common utility functions
+        window.ToolUtils = {
+            formatFileSize: function(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            },
+            handleFileUpload: function(file, callback) {
+                if (!file || !file.type.startsWith('image/')) {
+                    alert('Please upload a valid image file.');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => callback(img, e.target.result);
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
+            initDropZone: function(dropZone, fileInput, onFileSelect) {
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.style.background = '#e9ecef';
+                });
+                dropZone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    dropZone.style.background = '#f8f9fa';
+                });
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.style.background = '#f8f9fa';
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        onFileSelect(file);
+                    }
+                });
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        onFileSelect(file);
+                    }
+                });
+            },
+            createDownloadLink: function(dataUrl, filename) {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = dataUrl;
+                link.click();
+            },
+            showLoading: function(element) {
+                element.style.display = 'block';
+            },
+            hideLoading: function(element) {
+                element.style.display = 'none';
+            },
+            updateSliderValue: function(slider, valueDisplay) {
+                slider.addEventListener('input', () => {
+                    valueDisplay.textContent = slider.value + '%';
+                });
+            },
+            resetForm: function(resetBtn, callback) {
+                resetBtn.addEventListener('click', () => {
+                    callback();
+                });
+            },
+            initTool: function(config) {
+                const {
+                    dropZone,
+                    fileInput,
+                    preview,
+                    editContainer,
+                    onFileSelect,
+                    onReset
+                } = config;
+                this.initDropZone(dropZone, fileInput, onFileSelect);
+                if (onReset) {
+                    this.resetForm(resetBtn, onReset);
+                }
+                return {
+                    showPreview: (src) => {
+                        preview.src = src;
+                        editContainer.style.display = 'block';
+                    },
+                    hidePreview: () => {
+                        editContainer.style.display = 'none';
+                    }
+                };
+            }
+        };
+    </script>
+</body>
+</html> 

@@ -1,63 +1,88 @@
-# SEO Tools Collection
+# SEO Tools Hub
 
-A collection of free SEO tools to help optimize your website and improve search engine rankings.
+A comprehensive collection of SEO and image optimization tools.
 
-## Available Tools
+## Project Structure
 
-1. **Schema Markup Generator**
-   - Generate JSON-LD structured data
-   - Support for Local Business, Article, Product, and FAQ schemas
-   - Real-time preview
-
-2. **SERP Preview Tool**
-   - Preview how your pages appear in Google search results
-   - Desktop and mobile views
-   - Character count monitoring
-
-3. **Robots.txt Generator**
-   - Create SEO-friendly robots.txt files
-   - Pre-built templates for different website types
-   - Custom rule creation
-
-4. **Keyword Density Checker**
-   - Analyze keyword usage in your content
-   - Single word and phrase analysis
-   - Visual keyword distribution
-
-5. **Page Speed Checker**
-   - Analyze website loading speed
-   - Performance metrics
-   - Mobile and desktop testing
-
-## Usage
-
-These tools are available as standalone web applications. You can:
-
-1. Use them directly from GitHub Pages
-2. Embed them in your WordPress site using iframes
-3. Download and host them on your own server
-
-## WordPress Integration
-
-To integrate these tools into your WordPress site:
-
-1. Use the iframe method:
-```html
-<iframe 
-    src="https://yourusername.github.io/seo-tools/tools/seo/schema-generator.html" 
-    width="100%" 
-    height="800px" 
-    frameborder="0" 
-    allowfullscreen>
-</iframe>
+```
+SEO Tools Hub/
+├── tools/
+│   ├── seo/                 # SEO Tools
+│   │   ├── keyword-density.html
+│   │   ├── serp-preview.html
+│   │   └── schema-generator.html
+│   └── image/               # Image Tools
+│       ├── image-effects.html
+│       ├── image-cropper.html
+│       ├── background-remover.html
+│       ├── format-converter.html
+│       ├── image-enhancer.html
+│       ├── image-compressor.html
+│       └── image-resizer.html
+├── css/                     # Stylesheets
+│   └── style.css
+├── js/                      # JavaScript files
+│   └── main.js
+└── README.md
 ```
 
-2. Or use the WordPress plugin (coming soon)
+## How to Update or Add New Tools
 
-## Contributing
+1. **Adding New Tools**:
+   - Create new HTML files in the appropriate directory (`tools/seo/` or `tools/image/`)
+   - Follow the existing template structure
+   - Update the navigation menu in all tool files
+   - Add proper meta tags and SEO optimization
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+2. **Updating Existing Tools**:
+   - Open the specific tool file in Cursor
+   - Make your changes
+   - Test the functionality
+   - Update meta tags if necessary
 
-## License
+3. **Common Elements to Update**:
+   - Navigation menu in all files
+   - Footer information
+   - Meta tags and SEO elements
+   - CSS styles in `style.css`
+   - JavaScript functions in `main.js`
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+## SEO Optimization Guidelines
+
+1. **Meta Tags**:
+   - Update title tags with current year
+   - Include comprehensive meta descriptions
+   - Add relevant keywords
+   - Include Open Graph and Twitter Card tags
+   - Add Schema.org markup
+
+2. **Content Structure**:
+   - Use semantic HTML
+   - Maintain proper heading hierarchy
+   - Include clear instructions
+   - Add helpful tips and alerts
+
+3. **Technical SEO**:
+   - Ensure mobile responsiveness
+   - Optimize loading speed
+   - Include canonical URLs
+   - Add proper robots meta tags
+
+## Version Control
+
+This project uses Git for version control. To update:
+
+1. Commit your changes:
+   ```bash
+   git add .
+   git commit -m "Description of changes"
+   ```
+
+2. Push to repository:
+   ```bash
+   git push origin main
+   ```
+
+## Contact
+
+For questions or support, please open an issue in the GitHub repository. 
